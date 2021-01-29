@@ -1,0 +1,73 @@
+# Raw Material (without input ingredients)
+- output:
+    - item: Iron_Ore
+      quantity: 1
+  processing_time: 2
+  building: Mining_Machine
+- output:
+    - item: Copper_Ore
+      quantity: 1
+  processing_time: 2
+  building: Mining_Machine
+- output:
+    - item: Stone_Ore
+      quantity: 1
+  processing_time: 2
+  building: Mining_Machine
+- output:
+    - item: Coal_Ore
+      quantity: 1
+  processing_time: 2
+  building: Mining_Machine
+- output:
+    - item: Silicon_Ore
+      quantity: 1
+  processing_time: 2
+  building: Mining_Machine
+- output:
+    - item: Titanium_Ore
+      quantity: 1
+  processing_time: 2
+  building: Mining_Machine
+- output:
+    - item: Water
+      quantity: 1
+  processing_time: ??????
+  building: Water_Pump
+- output:
+    - item: Crude_Oil
+      quantity: 1
+  processing_time: ??????
+  building: Oil_Extractor
+
+- output:
+    - item: Silicon_Ore
+      quantity: 1
+  input:
+    - item: Stone_Ore
+      quantity: 10
+  processing_time: 10
+  building: Smelter
+- output:
+    - item: Refined_Oil
+      quantity: 2
+    - item: Hydrogen
+      quantity: 1
+  input:
+    - item: Crude_Oil
+      quantity: 2
+  processing_time: 4
+  building: Oil_Refinery
+
+- output:
+    - item: Energetic_Graphite
+      quantity: 1
+    - item: Hydrogen
+      quantity: 3
+  input:
+    - item: Refined_Oil
+      quantity: 1
+    - item: Hydrogen
+      quantity: 2
+  processing_time: 4
+  building: Oil_Refinery
