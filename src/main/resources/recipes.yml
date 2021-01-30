@@ -39,7 +39,6 @@
       quantity: 1
   processing_time: ??????
   building: Oil_Extractor
-
 - output:
     - item: Silicon_Ore
       quantity: 1
@@ -58,7 +57,6 @@
       quantity: 2
   processing_time: 4
   building: Oil_Refinery
-
 - output:
     - item: Energetic_Graphite
       quantity: 1

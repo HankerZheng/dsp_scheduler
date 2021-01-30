@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package hanker.dsp_scheduler;
+
+option java_package = "com.hanker.dsp_scheduler";
+option java_outer_classname = "DspSchedulerProtos";
+
+message Item {
+  string name = 1;
+  repeated string parent_items = 2;
+  repeated string child_items = 3;
+  string description = 4;
+}
+
+message Building {
+  string name = 1;
+  // The power consumption in kW when the building doesn't produce.
+  int32 idle_power = 2;
+  int32 full_power = 3;
+  float produce_speed = 4;
+}
+
+message Recipe {
+  repeated Ingredient outputs = 1;
+  repeated Ingredient inputs = 2;
+  Building building = 3;
+  int32 processing_time = 4;
+}
+
+message Ingredient {
+  string item_name = 1;
+  int32 quantity = 2;
+}
