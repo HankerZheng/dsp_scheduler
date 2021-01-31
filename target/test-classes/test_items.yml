@@ -1,9 +1,0 @@
-- name: item1
-  description: "description for item1."
-  used_for:
-    - item2
-    - item3
-- name: item2
-  description: "description for item2."
-- name: item3
-  description: "description for item3."
