@@ -1,9 +1,9 @@
 com/hanker/dsp_scheduler/proto/BuildingOrBuilder.class
 com/hanker/dsp_scheduler/proto/Item.class
 com/hanker/dsp_scheduler/proto/ItemOrBuilder.class
-com/hanker/dsp_scheduler/proto/Building$1.class
 com/hanker/dsp_scheduler/proto/DspSchedulerProtos$1.class
 com/hanker/dsp_scheduler/proto/Recipe.class
+com/hanker/dsp_scheduler/proto/Building$1.class
 com/hanker/dsp_scheduler/proto/Recipe$Builder.class
 com/hanker/dsp_scheduler/proto/Ingredient.class
 com/hanker/dsp_scheduler/proto/Building$Builder.class
@@ -12,10 +12,10 @@ com/hanker/dsp_scheduler/ConfigParser.class
 com/hanker/dsp_scheduler/proto/Ingredient$NameOneofCase.class
 com/hanker/dsp_scheduler/proto/Ingredient$2.class
 com/hanker/dsp_scheduler/proto/IngredientOrBuilder.class
-com/hanker/dsp_scheduler/proto/Ingredient$1.class
 com/hanker/dsp_scheduler/proto/Recipe$1.class
+com/hanker/dsp_scheduler/proto/Ingredient$1.class
 com/hanker/dsp_scheduler/proto/Building.class
-com/hanker/dsp_scheduler/proto/DspSchedulerProtos.class
 com/hanker/dsp_scheduler/proto/Item$Builder.class
+com/hanker/dsp_scheduler/proto/DspSchedulerProtos.class
 com/hanker/dsp_scheduler/proto/Item$1.class
 com/hanker/dsp_scheduler/proto/Ingredient$Builder.class
