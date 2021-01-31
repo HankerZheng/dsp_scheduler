@@ -1,11 +1,13 @@
+- name: itemForParserTest
+  description: description for one item.
+  produced_items:
+    - A
+    - B
+  produced_buildings:
+    - C
+    - D
 - name: item1
   description: description for item1.
-  produced_items:
-    - item2
-    - item3
-  produced_buildings:
-    - building1
-    - building2
 - name: item2
   description: description for item2.
 - name: item3

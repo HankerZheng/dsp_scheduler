@@ -18,20 +18,20 @@ public class DspSchedulerGlobalStateTest {
   @Test
   public void getOutputItemOrBuildingName_buildingName() {
     Ingredient ingredient = Ingredient.newBuilder().setBuildingName("building").build();
-    assertThat(DspSchedulerGlobalState.getOutputItemOrBuildingName(ingredient)).isEqualTo("building");
+    assertThat(DspSchedulerGlobalState.getItemOrBuildingName(ingredient)).isEqualTo("building");
   }
 
   @Test
   public void getOutputItemOrBuildingName_itemName() {
     Ingredient ingredient = Ingredient.newBuilder().setItemName("item").build();
-    assertThat(DspSchedulerGlobalState.getOutputItemOrBuildingName(ingredient)).isEqualTo("item");
+    assertThat(DspSchedulerGlobalState.getItemOrBuildingName(ingredient)).isEqualTo("item");
   }
 
   @Test
   public void getOutputItemOrBuildingName_noName() {
     Ingredient ingredient = Ingredient.getDefaultInstance();
     RuntimeException e = assertThrows(RuntimeException.class,
-        () -> DspSchedulerGlobalState.getOutputItemOrBuildingName(ingredient));
+        () -> DspSchedulerGlobalState.getItemOrBuildingName(ingredient));
     assertThat(e).hasMessageThat().contains("No name is set in the ingredient");
   }
 
@@ -61,8 +61,7 @@ public class DspSchedulerGlobalStateTest {
             .setBuildingName("worker").build();
     ImmutableList<Recipe> recipes = ImmutableList.of(recipe1, recipe2);
 
-    DspSchedulerGlobalState state = new DspSchedulerGlobalState();
-    state.initialize(itemMap, buildingMap, recipes);
+    DspSchedulerGlobalState state = DspSchedulerGlobalState.createFromLocalData(itemMap, buildingMap, recipes);
 
     assertThat(state.getItem("item1"))
         .ignoringRepeatedFieldOrder()

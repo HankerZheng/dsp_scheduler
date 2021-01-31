@@ -16,58 +16,71 @@ public class ConfigParserTest {
 
   @Test
   public void parseBuildings() throws Exception {
-    Building building1 = Building.newBuilder()
-        .setName("building1")
-        .setYieldRate(1.5F)
+    Building worker = Building.newBuilder()
+        .setName("worker")
+        .setYieldMultiplier(1.5F)
         .build();
-    Building building2 = Building.newBuilder()
-        .setName("building2")
+    Building building = Building.newBuilder()
+        .setName("building")
         .build();
 
     Map<String, Building> buildingMap =
         ConfigParser.parseBuildingMap("test_buildings.yml");
 
     assertThat(buildingMap)
-        .containsExactly("building1", building1, "building2", building2);
+        .containsExactly("worker", worker, "building", building);
   }
+
   @Test
   public void parseItems() throws Exception {
-    Item item1 = Item.newBuilder()
-        .setName("item1")
-        .setDescription("description for item1.")
-        .addProducedItems("item2")
-        .addProducedItems("item3")
-        .addProducedBuildings("building1")
-        .addProducedBuildings("building2")
+    Item itemForParserTest = Item.newBuilder()
+        .setName("itemForParserTest")
+        .setDescription("description for one item.")
+        .addProducedItems("A")
+        .addProducedItems("B")
+        .addProducedBuildings("C")
+        .addProducedBuildings("D")
         .build();
 
     Map<String, Item> itemMap =
         ConfigParser.parseItemMap("test_items.yml");
 
-    assertThat(itemMap).hasSize(3);
-    assertThat(itemMap.get("item1")).isEqualTo(item1);
+    assertThat(itemMap).hasSize(4);
+    assertThat(itemMap.get("itemForParserTest")).isEqualTo(itemForParserTest);
+    assertThat(itemMap).containsKey("item1");
     assertThat(itemMap).containsKey("item2");
     assertThat(itemMap).containsKey("item3");
   }
 
   @Test
   public void parseRecipes() throws Exception {
-    Recipe expectedRecipe = Recipe.newBuilder()
-        .addOutputs(Ingredient.newBuilder().setItemName("item1").setQuantity(1))
-        .addOutputs(Ingredient.newBuilder().setBuildingName("output_building").setQuantity(2))
+    Recipe recipe1 = Recipe.newBuilder()
+        .addOutputs(Ingredient.newBuilder().setItemName("item3").setQuantity(1))
+        .addInputs(Ingredient.newBuilder().setItemName("item1").setQuantity(2))
+        .addInputs(Ingredient.newBuilder().setItemName("item2").setQuantity(3))
+        .setBuildingName("worker")
+        .setProcessingTime(4.0F)
+        .build();
+    Recipe recipe2 = Recipe.newBuilder()
+        .addOutputs(Ingredient.newBuilder().setBuildingName("building").setQuantity(1))
         .addInputs(Ingredient.newBuilder().setItemName("item2").setQuantity(2))
         .addInputs(Ingredient.newBuilder().setItemName("item3").setQuantity(3))
-        .setBuildingName("building")
-        .setProcessingTime(1.5F)
+        .setBuildingName("worker")
+        .setProcessingTime(3.0F)
+        .build();
+    Recipe recipe3 = Recipe.newBuilder()
+        .addOutputs(Ingredient.newBuilder().setItemName("item3").setQuantity(3))
+        .addOutputs(Ingredient.newBuilder().setItemName("item1").setQuantity(1))
+        .addInputs(Ingredient.newBuilder().setItemName("item2").setQuantity(1))
+        .addInputs(Ingredient.newBuilder().setItemName("item3").setQuantity(1))
+        .setBuildingName("worker")
+        .setProcessingTime(2.0F)
         .build();
 
     List<Recipe> recipeList =
         ConfigParser.parseRecipes("test_recipes.yml");
 
-    assertThat(recipeList).hasSize(2);
-    assertThat(recipeList.get(0))
-        .ignoringRepeatedFieldOrder()
-        .isEqualTo(expectedRecipe);
+    assertThat(recipeList).ignoringRepeatedFieldOrder().containsExactly(recipe1, recipe2, recipe3);
   }
 }
 

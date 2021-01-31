@@ -1,6 +1,5 @@
 package com.hanker.dsp_scheduler.configuration;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.hanker.dsp_scheduler.proto.Building;
@@ -14,36 +13,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.hanker.dsp_scheduler.proto.Ingredient.NameOneofCase.BUILDING_NAME;
-import static com.hanker.dsp_scheduler.proto.Ingredient.NameOneofCase.ITEM_NAME;
+import static com.hanker.dsp_scheduler.proto.Ingredient.IngredientNameOneofCase.BUILDING_NAME;
+import static com.hanker.dsp_scheduler.proto.Ingredient.IngredientNameOneofCase.ITEM_NAME;
 
 public class DspSchedulerGlobalState {
   private ListMultimap<String, Recipe> recipeMultimap;
   private Map<String, Item> itemMap;
   private Map<String, Building> buildingMap;
 
-  DspSchedulerGlobalState() {}
+  DspSchedulerGlobalState(Map<String, Item> itemMap, Map<String, Building> buildingMap, List<Recipe> recipeList) {
+    initialize(itemMap, buildingMap, recipeList);
+  }
 
   public static DspSchedulerGlobalState createFromDefaultFiles() throws IOException {
     Map<String, Item> itemMap = ConfigParser.parseItemMap("items.yml");
     Map<String, Building> buildingMap = ConfigParser.parseBuildingMap("buildings.yml");
     List<Recipe> recipeList = ConfigParser.parseRecipes("recipes.yml");
 
-    return new DspSchedulerGlobalState().initialize(itemMap, buildingMap, recipeList);
+    return createFromLocalData(itemMap, buildingMap, recipeList);
   }
 
-  @VisibleForTesting
-  static String getOutputItemOrBuildingName(Ingredient ingredient) {
-    if (ingredient.getNameOneofCase() == ITEM_NAME) {
+  public static DspSchedulerGlobalState createFromLocalData(
+      Map<String, Item> itemMap, Map<String, Building> buildingMap, List<Recipe> recipeList) {
+    return new DspSchedulerGlobalState(itemMap, buildingMap, recipeList);
+  }
+
+  public static String getItemOrBuildingName(Ingredient ingredient) {
+    if (ingredient.getIngredientNameOneofCase() == ITEM_NAME) {
       return ingredient.getItemName();
-    } else if (ingredient.getNameOneofCase() == BUILDING_NAME) {
+    } else if (ingredient.getIngredientNameOneofCase() == BUILDING_NAME) {
       return ingredient.getBuildingName();
     }
     throw new RuntimeException(String.format("No name is set in the ingredient %s", ingredient));
   }
 
-  @VisibleForTesting
-  DspSchedulerGlobalState initialize(
+  private DspSchedulerGlobalState initialize(
       Map<String, Item> inputItemMap, Map<String, Building> buildingMap, List<Recipe> recipeList) {
     this.itemMap = new HashMap<>(inputItemMap);
     this.buildingMap = buildingMap;
@@ -52,7 +56,7 @@ public class DspSchedulerGlobalState {
     for (Recipe recipe : recipeList) {
       updateProducedItemsInItemMap(recipe);
       for (Ingredient outputIngredient : recipe.getOutputsList()) {
-        this.recipeMultimap.put(getOutputItemOrBuildingName(outputIngredient), recipe);
+        this.recipeMultimap.put(getItemOrBuildingName(outputIngredient), recipe);
       }
     }
     return this;
@@ -86,9 +90,11 @@ public class DspSchedulerGlobalState {
   public Item getItem(String itemName) {
     return itemMap.get(itemName);
   }
+
   public Building getBuilding(String buildingName) {
     return buildingMap.get(buildingName);
   }
+
   public List<Recipe> getRecipeByName(String name) {
     return recipeMultimap.get(name);
   }
