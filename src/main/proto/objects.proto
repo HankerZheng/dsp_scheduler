@@ -9,7 +9,8 @@ option java_multiple_files = true;
 message Item {
   string name = 1;
   string description = 2;
-  repeated string used_for = 3;
+  repeated string produced_items = 3;
+  repeated string produced_buildings = 4;
 }
 
 message Building {
@@ -17,7 +18,7 @@ message Building {
   // The power consumption in kW when the building doesn't produce.
   int32 idle_power = 2;
   int32 full_power = 3;
-  float produce_speed = 4;
+  float yield_rate = 4;
 }
 
 message Recipe {

@@ -1,2 +1,3 @@
 - name: building1
+  yield_rate: 1.5
 - name: building2

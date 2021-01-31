@@ -1,9 +1,12 @@
 - name: item1
-  description: "description for item1."
-  used_for:
+  description: description for item1.
+  produced_items:
     - item2
     - item3
+  produced_buildings:
+    - building1
+    - building2
 - name: item2
-  description: "description for item2."
+  description: description for item2.
 - name: item3
-  description: "description for item3."
+  description: description for item3.

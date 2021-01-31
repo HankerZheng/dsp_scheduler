@@ -1,4 +1,4 @@
-package com.hanker.dsp_scheduler;
+package com.hanker.dsp_scheduler.configuration;
 
 import com.google.gson.Gson;
 import com.google.protobuf.util.JsonFormat;
@@ -22,12 +22,12 @@ public class ConfigParser {
   private static final Yaml yamlLoader = new Yaml();
   private static final Gson gson = new Gson();
 
-  public static Map<String, Item.Builder> parseItemMap(String filename) throws IOException {
-    Map<String, Item.Builder> itemMap = new HashMap<>();
+  public static Map<String, Item> parseItemMap(String filename) throws IOException {
+    Map<String, Item> itemMap = new HashMap<>();
     for (Object data : loadYamlDataFileFile(filename)) {
       Item.Builder itemBuilder = Item.newBuilder();
       JsonFormat.parser().merge(gson.toJson(data), itemBuilder);
-      itemMap.put(itemBuilder.getName(), itemBuilder);
+      itemMap.put(itemBuilder.getName(), itemBuilder.build());
     }
     return itemMap;
   }
@@ -55,10 +55,5 @@ public class ConfigParser {
   private static List<String> loadYamlDataFileFile(String filename) throws IOException {
     InputStream inputStream = classLoader.getResourceAsStream(filename);
     return yamlLoader.load(inputStream);
-  }
-
-  public static void main(String[] args) throws Exception {
-    Map<String, Item.Builder> itemMap = parseItemMap("items.yml");
-    System.out.println(itemMap);
   }
 }
