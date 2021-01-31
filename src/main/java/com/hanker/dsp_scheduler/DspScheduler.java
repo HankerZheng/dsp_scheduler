@@ -93,6 +93,10 @@ public class DspScheduler {
     return Optional.empty();
   }
 
+  public DspSchedulerGlobalState getState() {
+    return state;
+  }
+
   public static void main(String[] args) {
     DspScheduler scheduler = createFromDefaultConfiguration();
     scheduler.state.validate();

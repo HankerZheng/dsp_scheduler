@@ -1,24 +1,36 @@
 package com.hanker.dsp_scheduler.ui;
 
+import com.hanker.dsp_scheduler.DspScheduler;
+import com.hanker.dsp_scheduler.proto.Item;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 import java.util.HashMap;
 
 public class ProcessingUI extends PApplet {
-    int itemSize = 68;     // Diameter of rect
+    int itemSize = 55;     // Diameter of rect
+    int itemLiquidSize = 27;
+    int itemLiquidX = 11;
     int itemX = 12;
     int itemY = 7;
-    int itemLiquidSize = 38;
-    int itemLiquidX = 15;
+    int buildingX = 12;
+    int buildingY = 4;
+    int buildingMarginTop, buildingMarginLeft;
+    int producedItemMarginTop, producedItemMarginLeft;
     int recRad = 7;
     int fontSize = 15;
+    int flowLength = 160;
     int buttonColor, buttonHighlight;
-    int marginTop, marginLeft;
+    int marginTop = 30;
+    int marginLeft = 30;
+    int marginLeftRecipe = 50;
     int returnButtonX, returnButtonY;
     int[] buttonOver = new int[2];
+    int[] buildingOver = new int[2];
     HashMap<String, PImage> itemImgs = new HashMap<String, PImage>();
     String[][] itemNames = new String[itemX][itemY];
+    HashMap<String, PImage> buildingImgs = new HashMap<String, PImage>();
+    String[][] buildingNames = new String[buildingX][buildingY];
     String blank = "Blank";
     String iconPrefix = "icons/Icon_";
     String pngPostfix = ".png";
@@ -27,8 +39,10 @@ public class ProcessingUI extends PApplet {
     String rOil = "Refined_Oil";
     String cOil = "Crude_Oil";
     String back = "Back";
-    boolean renderRecipe = false;
+    boolean renderItemRecipe = false;
+    boolean renderBuildingRecipe = false;
     boolean returnMenu = false;
+    DspScheduler dspScheduler;
 
     public void settings() {
         size(1280, 720);
@@ -36,11 +50,15 @@ public class ProcessingUI extends PApplet {
 
     @Override
     public void setup() {
-        marginTop = (width - (itemSize * itemX)) / 2;
-        marginLeft = (height - (itemSize * itemY)) / 2;
+        dspScheduler = DspScheduler.createFromDefaultConfiguration();
+        buildingMarginLeft = marginLeft;
+        buildingMarginTop = marginTop + ((itemSize + 3 ) * itemY);
+        producedItemMarginLeft = marginLeft + ((itemSize + 3 ) * itemX);
+        producedItemMarginTop = marginTop;
         returnButtonX = (width - 100);
         returnButtonY = (height - 100);
         String[] items = loadStrings("ui_items.yml");
+        String[] buildings = loadStrings("ui_buildings.yml");
         buttonHighlight = color(51);
         for (int i = 0; i < itemX; i++) {
             for (int j = 0; j < itemY; j++) {
@@ -49,41 +67,78 @@ public class ProcessingUI extends PApplet {
                 itemImgs.put(item, loadImage(iconPrefix + item + pngPostfix));
             }
         }
+        for (int i = 0; i < buildingX; i++) {
+            for (int j = 0; j < buildingY; j++) {
+                String building = buildings[i + (j * buildingX)].trim();
+                buildingNames[i][j] = building;
+                buildingImgs.put(building, loadImage(iconPrefix + building + pngPostfix));
+            }
+        }
     }
 
     @Override
     public void draw() {
         update(mouseX, mouseY);
         background(0);
-        if (renderRecipe) {
-            renderRecipe(itemNames[buttonOver[0]][buttonOver[1]]);
+        if (renderItemRecipe) {
+            renderItemRecipe(itemNames[buttonOver[0]][buttonOver[1]]);
+            renderReturnButton();
+        } else if (renderBuildingRecipe) {
+            renderBuildingRecipe(buildingNames[buildingOver[0]][buildingOver[1]]);
             renderReturnButton();
         } else {
-            renderHover();
+            renderItemHover();
+            renderBuildingHover();
             renderAllItems();
-            renderCaption();
+            renderAllBuildings();
+            renderItemCaption();
+            renderBuildingCaption();
         }
     }
 
     void update(int x, int y) {
         buttonOver = getOverButtonNum();
+        buildingOver = getOverBuildingNum();
         returnMenu = getOverReturnButton();
     }
 
     @Override
     public void mousePressed() {
-        if (buttonOver[0] >= 0 && buttonOver[1] >= 0) {
+        if (buttonOver[0] >= 0 && buttonOver[1] >= 0){
             println("choose item:", buttonOver[0], buttonOver[1]);
-            renderRecipe = true;
+            renderItemRecipe = true;
+            renderBuildingRecipe = false;
+        }
+        if (buildingOver[0] >= 0 && buildingOver[1] >= 0){
+            println("choose building:", buildingOver[0], buildingOver[1]);
+            renderBuildingRecipe = true;
+            renderItemRecipe = false;
         }
         if (returnMenu) {
-            renderRecipe = false;
+            println("go back to main page:");
+            renderItemRecipe = false;
+            renderBuildingRecipe = false;
         }
     }
 
-    void renderRecipe(String itemName) {
+    void renderItemRecipe(String itemName) {
         int treeDepth = 3;
-        renderItem(itemName, height - treeDepth / 2, marginLeft);
+        renderItem(itemName, marginLeftRecipe, height/2);
+        renderItem("Iron_Ingot", marginLeftRecipe + (itemSize + flowLength), height/treeDepth );
+        noFill();
+        stroke(255,255,255);
+
+        bezier(marginLeftRecipe + itemSize, height/2 + itemSize/2, marginLeftRecipe + itemSize + flowLength/2 , height/2 + itemSize/2,
+                marginLeftRecipe + itemSize +flowLength - flowLength/2, height/treeDepth + itemSize/2, marginLeftRecipe + itemSize +flowLength, height/treeDepth + itemSize/2);
+
+        renderItem("Copper_Ingot", marginLeftRecipe + flowLength + itemSize, height/treeDepth*2);
+        renderItem("Iron_Ore", marginLeftRecipe + 2 * (itemSize + flowLength), height/treeDepth);
+        renderItem("Copper_Ore", marginLeftRecipe + 2 * (itemSize + flowLength), height/treeDepth*2);
+    }
+
+    void renderBuildingRecipe(String buildingName) {
+        // TODO: reuse renderItemRecipe
+        renderItem("Iron_Ingot", marginLeftRecipe + (itemSize + flowLength), height/3 );
     }
 
     void renderReturnButton() {
@@ -99,7 +154,7 @@ public class ProcessingUI extends PApplet {
         text(back, returnButtonX + fontSize / 2, returnButtonY + fontSize);
     }
 
-    void renderCaption() {
+    void renderItemCaption() {
         int i = buttonOver[0];
         int j = buttonOver[1];
         if (i < 0 || j < 0) {
@@ -114,8 +169,23 @@ public class ProcessingUI extends PApplet {
             text(itemName.replace("_", " "), marginTop + (i * itemSize + itemSize / 2), marginLeft + ((j + 1) * itemSize) + fontSize);
         }
     }
+    void renderBuildingCaption() {
+        int i = buildingOver[0];
+        int j = buildingOver[1];
+        if (i < 0 || j < 0) {
+            return;
+        }
+        String buildingName = buildingNames[i][j];
+        if (!buildingName.equals(blank)) {
+            textSize(fontSize);
+            fill(255, 255, 255);
+            rect(buildingMarginLeft + (i * itemSize + itemSize / 2), buildingMarginTop + ((j + 1) * itemSize), textWidth(buildingName), fontSize + 5);
+            fill(0, 0, 0);
+            text(buildingName.replace("_", " "), buildingMarginLeft + (i * itemSize + itemSize / 2), buildingMarginTop + ((j + 1) * itemSize) + fontSize);
+        }
+    }
 
-    void renderHover() {
+    void renderItemHover() {
         int i = buttonOver[0];
         int j = buttonOver[1];
         if (i < 0 || j < 0) {
@@ -129,6 +199,28 @@ public class ProcessingUI extends PApplet {
         }
         noStroke();
         rect(marginTop + (i * itemSize), marginLeft + (j * itemSize), itemSize, itemSize, recRad);
+        Item item = dspScheduler.getState().getItem(itemName);
+        int itemIndex = 0;
+        for (String producedItemName : item.getProducedItemsList()) {
+            renderItem(producedItemName,  producedItemMarginLeft + itemIndex * itemSize,  producedItemMarginTop);
+            itemIndex++;
+        }
+        //println(item.getProducedBuildingsList());
+    }
+    void renderBuildingHover() {
+        int i = buildingOver[0];
+        int j = buildingOver[1];
+        if (i < 0 || j < 0) {
+            return;
+        }
+        String buildingName = buildingNames[i][j];
+        if (!buildingName.equals(blank)) {
+            fill(buttonHighlight);
+        } else {
+            fill(buttonColor);
+        }
+        noStroke();
+        rect(buildingMarginLeft + (i * itemSize), buildingMarginTop + (j * itemSize), itemSize, itemSize, recRad);
     }
 
     void renderAllItems() {
@@ -144,7 +236,15 @@ public class ProcessingUI extends PApplet {
             }
         }
     }
-
+    void renderAllBuildings() {
+        for (int i = 0; i < buildingX; i++) {
+            for (int j = 0; j < buildingY; j++) {
+                String buildingName = buildingNames[i][j];
+                // render button image
+                image(buildingImgs.get(buildingName), buildingMarginLeft + (i * itemSize), buildingMarginTop + (j * itemSize), itemSize, itemSize);
+            }
+        }
+    }
     void renderItem(String itemName, int x, int y) {
         // render button image
         if (itemName.equals(water) || itemName.equals(sAcid) || itemName.equals(rOil) || itemName.equals(cOil)) {
@@ -155,8 +255,12 @@ public class ProcessingUI extends PApplet {
     }
 
     int[] getOverButtonNum() {
-        if (renderRecipe) {
+        if (renderItemRecipe || renderBuildingRecipe) {
             return buttonOver;
+        }
+        if (mouseX < marginLeft && mouseX > marginLeft + itemX * itemSize &&
+                mouseY < marginTop && mouseY <= marginTop + itemY *itemSize){
+            return new int[]{-1, -1};
         }
         for (int i = 0; i < itemX; i++) {
             for (int j = 0; j < itemY; j++) {
@@ -171,8 +275,29 @@ public class ProcessingUI extends PApplet {
         return new int[]{-1, -1};
     }
 
+    int[] getOverBuildingNum() {
+        if (renderBuildingRecipe || renderItemRecipe) {
+            return buildingOver;
+        }
+        if (mouseX < buildingMarginLeft && mouseX > buildingMarginLeft + buildingX * itemSize &&
+                mouseY < buildingMarginTop && mouseY <= buildingMarginTop + buildingY *itemSize){
+            return new int[]{-1, -1};
+        }
+        for (int i = 0; i < buildingX; i++) {
+            for (int j = 0; j < buildingY; j++) {
+                int x = buildingMarginLeft + (i * itemSize);
+                int y = buildingMarginTop + (j * itemSize);
+                if (mouseX >= x && mouseX <= x + itemSize &&
+                        mouseY >= y && mouseY <= y + itemSize && !buildingNames[i][j].equals(blank)){
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return new int[]{-1, -1};
+    }
+
     boolean getOverReturnButton() {
-        if (renderRecipe) {
+        if (renderItemRecipe || renderBuildingRecipe) {
             return mouseX >= returnButtonX && mouseX <= returnButtonX + itemSize &&
                     mouseY >= returnButtonY && mouseY <= returnButtonY + itemSize;
         }
