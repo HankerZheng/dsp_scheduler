@@ -25,6 +25,7 @@ hs_err_pid*
 # IDEA project
 .DS_Store
 .idea
+dsp_scheduler.iml
 
 # Maven project
 target/

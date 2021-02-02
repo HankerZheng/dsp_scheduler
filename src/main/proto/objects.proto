@@ -40,7 +40,6 @@ message Ingredient {
   float yield_rate = 4;
 }
 
-// TODO(hanker): Replace Ingredient by Requirement to calculate the output tree.
 message Requirement {
   oneof requirement_name_oneof {
     string item_name = 1;
