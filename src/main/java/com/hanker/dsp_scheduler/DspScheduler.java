@@ -52,8 +52,8 @@ public class DspScheduler {
       System.err.printf("The recipe [%s] is not used for generate item [%s]!", recipe, name);
       return ImmutableList.of();
     }
-    float yieldRatePerBuilding = 60 / recipe.getProcessingTime() * ingredientOptional.get().getQuantity();
-    int minRequiredBuilding = Math.round(yieldRate / yieldRatePerBuilding);
+    float yieldRatePerBuilding = 60.0F / recipe.getProcessingTime() * ingredientOptional.get().getQuantity();
+    int minRequiredBuilding = (int) Math.ceil(yieldRate / yieldRatePerBuilding);
     List<Requirement> requirements = new ArrayList<>();
     for (Ingredient ingredient : recipe.getInputsList()) {
       float requiredYieldRate = minRequiredBuilding * 60.0F / ingredient.getQuantity();
@@ -95,6 +95,14 @@ public class DspScheduler {
       }
     }
     return Optional.empty();
+  }
+
+  public static void main(String[] args) {
+    DspScheduler scheduler = createFromDefaultConfiguration();
+    scheduler.state.validate();
+    for (Requirement requirement : scheduler.getRequirementsToProduce("Electric_Motor", 100)) {
+      System.out.printf("%s\n", requirement);
+    }
   }
 
 }

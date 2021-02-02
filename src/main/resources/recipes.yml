@@ -1,72 +1,1439 @@
-# Raw Material (without inputs ingredients)
+# Raw Material and Ores
 - outputs:
     - item_name: Iron_Ore
       quantity: 1
   processing_time: 2
   building_name: Mining_Machine
+
 - outputs:
     - item_name: Copper_Ore
       quantity: 1
   processing_time: 2
   building_name: Mining_Machine
+
 - outputs:
     - item_name: Stone_Ore
       quantity: 1
   processing_time: 2
   building_name: Mining_Machine
+
 - outputs:
     - item_name: Coal_Ore
       quantity: 1
   processing_time: 2
   building_name: Mining_Machine
+
 - outputs:
     - item_name: Silicon_Ore
       quantity: 1
   processing_time: 2
   building_name: Mining_Machine
+
 - outputs:
     - item_name: Titanium_Ore
       quantity: 1
   processing_time: 2
   building_name: Mining_Machine
+
 - outputs:
     - item_name: Water
       quantity: 1
   processing_time: 1.091
   building_name: Water_Pump
+
 - outputs:
     - item_name: Crude_Oil
       quantity: 1
       # The processing time depends on the source. Use 1.5/s as an estimation.
   processing_time: 0.667
   building_name: Oil_Extractor
+
 - outputs:
     - item_name: Silicon_Ore
       quantity: 1
+  processing_time: 10
+  building_name: Smelter
   inputs:
     - item_name: Stone_Ore
       quantity: 10
-  processing_time: 10
-  building_name: Smelter
+
+# Rare Ores
 - outputs:
-    - item_name: Refined_Oil
-      quantity: 2
-    - item_name: Hydrogen
+    - item_name: Kimberlite_Ore
       quantity: 1
+  processing_time: 2
+  building_name: Mining_Machine
+
+- outputs:
+    - item_name: Fractal_Silicon
+      quantity: 1
+  processing_time: 2
+  building_name: Mining_Machine
+
+- outputs:
+    - item_name: Optical_Grating_Crystal
+      quantity: 1
+  processing_time: 2
+  building_name: Mining_Machine
+
+- outputs:
+    - item_name: Spiniform_Stalagmite_Crystal
+      quantity: 1
+  processing_time: 2
+  building_name: Mining_Machine
+
+- outputs:
+    - item_name: Unipolar_Magnet
+      quantity: 1
+  processing_time: 2
+  building_name: Mining_Machine
+
+- outputs:
+    - item_name: Log
+      quantity: 1
+  processing_time: 2
+  building_name: Mining_Machine
+
+- outputs:
+    - item_name: Plant_Fuel
+      quantity: 1
+  processing_time: 2
+  building_name: Mining_Machine
+
+- outputs:
+    - item_name: Fire_Ice
+      quantity: 1
+  processing_time: 2
+  building_name: Mining_Machine
+
+- outputs:
+    - item_name: Critical_Photon
+      quantity: 1
+  processing_time: 2
+  building_name: Ray_Receiver
+
+- outputs:
+    - item_name: Organic_Crystal
+      quantity: 1
+  processing_time: 2
+  building_name: Mining_Machine
+
+# Basic Material/Component Recipes
+- outputs:
+    - item_name: Iron_Ingot
+      quantity: 1
+  processing_time: 1
+  building_name: Smelter
   inputs:
-    - item_name: Crude_Oil
+    - item_name: Iron_Ore
+      quantity: 1
+
+- outputs:
+    - item_name: Copper_Ingot
+      quantity: 1
+  processing_time: 1
+  building_name: Smelter
+  inputs:
+    - item_name: Copper_Ore
+      quantity: 1
+
+- outputs:
+    - item_name: Stone
+      quantity: 1
+  processing_time: 1
+  building_name: Smelter
+  inputs:
+    - item_name: Stone_Ore
+      quantity: 1
+
+- outputs:
+    - item_name: Energetic_Graphite
+      quantity: 1
+  processing_time: 2
+  building_name: Smelter
+  inputs:
+    - item_name: Coal_Ore
       quantity: 2
-  processing_time: 4
-  building_name: Oil_Refinery
+
 - outputs:
     - item_name: Energetic_Graphite
       quantity: 1
     - item_name: Hydrogen
       quantity: 3
+  processing_time: 4
+  building_name: Smelter
   inputs:
     - item_name: Refined_Oil
       quantity: 1
     - item_name: Hydrogen
       quantity: 2
+
+- outputs:
+    - item_name: High-Purity_Silicon
+      quantity: 1
+  processing_time: 2
+  building_name: Smelter
+  inputs:
+    - item_name: Silicon_Ore
+      quantity: 2
+
+- outputs:
+    - item_name: Titanium_Ingot
+      quantity: 1
+  processing_time: 2
+  building_name: Smelter
+  inputs:
+    - item_name: Titanium_Ore
+      quantity: 2
+
+- outputs:
+    - item_name: Sulfuric_Acid
+      quantity: 4
+  processing_time: 6
+  building_name: Chemical_Plant
+  inputs:
+    - item_name: Refined_Oil
+      quantity: 6
+    - item_name: Stone_Ore
+      quantity: 8
+    - item_name: Water
+      quantity: 4
+
+- outputs:
+    - item_name: Hydrogen
+      quantity: 1
+    - item_name: Refined_Oil
+      quantity: 2
   processing_time: 4
   building_name: Oil_Refinery
+  inputs:
+    - item_name: Crude_Oil
+      quantity: 2
+
+- outputs:
+    - item_name: Magnet
+      quantity: 1
+  processing_time: 1.5
+  building_name: Smelter
+  inputs:
+    - item_name: Iron_Ore
+      quantity: 1
+
+- outputs:
+    - item_name: Magnetic_Coil
+      quantity: 2
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - item_name: Magnet
+      quantity: 2
+    - item_name: Copper_Ingot
+      quantity: 1
+
+- outputs:
+    - item_name: Glass
+      quantity: 1
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: Stone_Ore
+      quantity: 2
+
+- outputs:
+    - item_name: Diamond
+      quantity: 1
+  processing_time: 2
+  building_name: Smelter
+  inputs:
+    - item_name: Energetic_Graphite
+      quantity: 1
+
+- outputs:
+    - item_name: Diamond
+      quantity: 1
+  processing_time: 2
+  building_name: Smelter
+  inputs:
+    - item_name: Kimberlite_Ore
+      quantity: 1
+
+- outputs:
+    - item_name: Crystal_Silicon
+      quantity: 1
+  processing_time: 1
+  building_name: Smelter
+  inputs:
+    - item_name: High-Purity_Silicon
+      quantity: 1
+
+- outputs:
+    - item_name: Crystal_Silicon
+      quantity: 1
+  processing_time: 1
+  building_name: Smelter
+  inputs:
+    - item_name: Fractal_Silicon
+      quantity: 1
+
+- outputs:
+    - item_name: Titanium_Alloy
+      quantity: 4
+  processing_time: 12
+  building_name: Smelter
+  inputs:
+    - item_name: Titanium_Ingot
+      quantity: 4
+    - item_name: Steel
+      quantity: 4
+    - item_name: Sulfuric_Acid
+      quantity: 8
+
+- outputs:
+    - item_name: Plastic
+      quantity: 1
+  processing_time: 3
+  building_name: Chemical_Plant
+  inputs:
+    - item_name: Refined_Oil
+      quantity: 2
+    - item_name: Energetic_Graphite
+      quantity: 1
+
+- outputs:
+    - item_name: Steel
+      quantity: 1
+  processing_time: 3
+  building_name: Smelter
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 3
+
+- outputs:
+    - item_name: Circuit_Board
+      quantity: 2
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 2
+    - item_name: Copper_Ingot
+      quantity: 1
+
+- outputs:
+    - item_name: Prism
+      quantity: 2
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: Glass
+      quantity: 3
+
+- outputs:
+    - item_name: Electric_Motor
+      quantity: 1
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 2
+    - item_name: Gear
+      quantity: 1
+    - item_name: Magnetic_Coil
+      quantity: 1
+
+- outputs:
+    - item_name: Microcrystalline_Component
+      quantity: 1
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: High-Purity_Silicon
+      quantity: 2
+    - item_name: Copper_Ingot
+      quantity: 1
+
+- outputs:
+    - item_name: Casimir_Crystal
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Crystal
+      quantity: 1
+    - item_name: Graphene
+      quantity: 2
+    - item_name: Hydrogen
+      quantity: 12
+
+- outputs:
+    - item_name: Casimir_Crystal
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Optical_Grating_Crystal
+      quantity: 6
+    - item_name: Graphene
+      quantity: 2
+    - item_name: Hydrogen
+      quantity: 12
+
+- outputs:
+    - item_name: Strange_Matter
+      quantity: 1
+  processing_time: 8
+  building_name: Miniature_Particle_Collider
+  inputs:
+    - item_name: Particle_Container
+      quantity: 2
+    - item_name: Iron_Ingot
+      quantity: 2
+    - item_name: Deuterium
+      quantity: 10
+
+- outputs:
+    - item_name: Gear
+      quantity: 1
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 1
+
+- outputs:
+    - item_name: Plasma_Exciter
+      quantity: 1
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: Magnetic_Coil
+      quantity: 4
+    - item_name: Prism
+      quantity: 2
+
+- outputs:
+    - item_name: Photon_Combiner
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - item_name: Prism
+      quantity: 2
+    - item_name: Circuit_Board
+      quantity: 1
+
+- outputs:
+    - item_name: Photon_Combiner
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - item_name: Optical_Grating_Crystal
+      quantity: 1
+    - item_name: Circuit_Board
+      quantity: 1
+
+- outputs:
+    - item_name: Electromagnetic_Turbine
+      quantity: 1
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: Electric_Motor
+      quantity: 2
+    - item_name: Magnetic_Coil
+      quantity: 2
+
+- outputs:
+    - item_name: Processor
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - item_name: Circuit_Board
+      quantity: 2
+    - item_name: Microcrystalline_Component
+      quantity: 2
+
+- outputs:
+    - item_name: Annihilation_Constraint_Sphere
+      quantity: 1
+  processing_time: 20
+  building_name: Assembler
+  inputs:
+    - item_name: Particle_Container
+      quantity: 1
+    - item_name: Processor
+      quantity: 1
+
+- outputs:
+    - item_name: Foundation
+      quantity: 1
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - item_name: Stone
+      quantity: 3
+    - item_name: Steel
+      quantity: 1
+
+- outputs:
+    - item_name: Particle_Container
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Electromagnetic_Turbine
+      quantity: 2
+    - item_name: Copper_Ingot
+      quantity: 2
+    - item_name: Graphene
+      quantity: 2
+
+- outputs:
+    - item_name: Particle_Container
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Unipolar_Magnet
+      quantity: 10
+    - item_name: Copper_Ingot
+      quantity: 2
+
+- outputs:
+    - item_name: Super-Magnetic_Ring
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - item_name: Electromagnetic_Turbine
+      quantity: 2
+    - item_name: Magnet
+      quantity: 3
+    - item_name: Energetic_Graphite
+      quantity: 1
+
+- outputs:
+    - item_name: Graviton_Lens
+      quantity: 1
+  processing_time: 6
+  building_name: Assembler
+  inputs:
+    - item_name: Diamond
+      quantity: 4
+    - item_name: Strange_Matter
+      quantity: 1
+
+- outputs:
+    - item_name: Space_Warper
+      quantity: 1
+  processing_time: 10
+  building_name: Assembler
+  inputs:
+    - item_name: Graviton_Lens
+      quantity: 1
+
+- outputs:
+    - item_name: Space_Warper
+      quantity: 8
+  processing_time: 10
+  inputs:
+    - item_name: Gravity_Matrix
+      quantity: 1
+
+- outputs:
+    - item_name: Solar_Sail
+      quantity: 2
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Graphene
+      quantity: 1
+    - item_name: Photon_Combiner
+      quantity: 1
+
+- outputs:
+    - item_name: Deuterium
+      quantity: 5
+  processing_time: 5
+  building_name: Miniature_Particle_Collider
+  inputs:
+    - item_name: Hydrogen
+      quantity: 10
+
+- outputs:
+    # This is a fake recipe for Deuterium from Fractionator.
+    - item_name: Deuterium
+      quantity: 1
+  processing_time: 1
+  building_name: Fractionator
+  inputs:
+    - item_name: Hydrogen
+      quantity: 100
+
+- outputs:
+    - item_name: Antimatter
+      quantity: 2
+    - item_name: Hydrogen
+      quantity: 2
+  processing_time: 2
+  building_name: Miniature_Particle_Collider
+  inputs:
+    - item_name: Critical_Photon
+      quantity: 2
+
+- outputs:
+    - item_name: Hydrogen_Fuel_Rod
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Ingot
+      quantity: 1
+    - item_name: Hydrogen
+      quantity: 5
+
+- outputs:
+    - item_name: Deuteron_Fuel_Rod
+      quantity: 1
+  processing_time: 6
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Alloy
+      quantity: 1
+    - item_name: Deuterium
+      quantity: 10
+    - item_name: Super-Magnetic_Ring
+      quantity: 1
+
+- outputs:
+    - item_name: Antimatter_Fuel_Rod
+      quantity: 1
+  processing_time: 12
+  building_name: Assembler
+  inputs:
+    - item_name: Antimatter
+      quantity: 10
+    - item_name: Hydrogen
+      quantity: 10
+    - item_name: Annihilation_Constraint_Sphere
+      quantity: 1
+    - item_name: Titanium_Alloy
+      quantity: 1
+
+- outputs:
+    - item_name: Organic_Crystal
+      quantity: 1
+  processing_time: 6
+  building_name: Chemical_Plant
+  inputs:
+    - item_name: Plastic
+      quantity: 2
+    - item_name: Refined_Oil
+      quantity: 1
+    - item_name: Water
+      quantity: 1
+
+- outputs:
+    - item_name: Organic_Crystal
+      quantity: 1
+  processing_time: 6
+  building_name: Chemical_Plant
+  inputs:
+    - item_name: Log
+      quantity: 20
+    - item_name: Plant_Fuel
+      quantity: 30
+    - item_name: Water
+      quantity: 10
+
+- outputs:
+    - item_name: Graphene
+      quantity: 2
+  processing_time: 3
+  building_name: Chemical_Plant
+  inputs:
+    - item_name: Energetic_Graphite
+      quantity: 3
+    - item_name: Sulfuric_Acid
+      quantity: 1
+
+- outputs:
+    - item_name: Graphene
+      quantity: 2
+    - item_name: Hydrogen
+      quantity: 1
+  processing_time: 2
+  building_name: Chemical_Plant
+  inputs:
+    - item_name: Fire_Ice
+      quantity: 2
+
+- outputs:
+    - item_name: Thruster
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Steel
+      quantity: 2
+    - item_name: Copper_Ingot
+      quantity: 3
+
+- outputs:
+    - item_name: Titanium_Crystal
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Organic_Crystal
+      quantity: 1
+    - item_name: Titanium_Ingot
+      quantity: 3
+
+- outputs:
+    - item_name: Carbon_Nanotube
+      quantity: 2
+  processing_time: 4
+  building_name: Chemical_Plant
+  inputs:
+    - item_name: Graphene
+      quantity: 3
+    - item_name: Titanium_Ingot
+      quantity: 1
+
+- outputs:
+    - item_name: Carbon_Nanotube
+      quantity: 2
+  processing_time: 4
+  building_name: Chemical_Plant
+  inputs:
+    - item_name: Spiniform_Stalagmite_Crystal
+      quantity: 2
+
+- outputs:
+    - item_name: Reinforced_Thruster
+      quantity: 1
+  processing_time: 6
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Alloy
+      quantity: 5
+    - item_name: Electromagnetic_Turbine
+      quantity: 5
+
+- outputs:
+    - item_name: Titanium_Glass
+      quantity: 2
+  processing_time: 5
+  building_name: Assembler
+  inputs:
+    - item_name: Glass
+      quantity: 2
+    - item_name: Titanium_Ingot
+      quantity: 2
+    - item_name: Water
+      quantity: 2
+
+- outputs:
+    - item_name: Particle_Broadband
+      quantity: 1
+  processing_time: 8
+  building_name: Assembler
+  inputs:
+    - item_name: Carbon_Nanotube
+      quantity: 2
+    - item_name: Crystal_Silicon
+      quantity: 2
+    - item_name: Plastic
+      quantity: 1
+
+- outputs:
+    - item_name: Logistics_Drone
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 5
+    - item_name: Processor
+      quantity: 2
+    - item_name: Thruster
+      quantity: 2
+
+- outputs:
+    - item_name: Plane_Filter
+      quantity: 1
+  processing_time: 12
+  building_name: Assembler
+  inputs:
+    - item_name: Casimir_Crystal
+      quantity: 1
+    - item_name: Titanium_Glass
+      quantity: 2
+
+- outputs:
+    - item_name: Quantum_Chip
+      quantity: 1
+  processing_time: 6
+  building_name: Assembler
+  inputs:
+    - item_name: Processor
+      quantity: 2
+    - item_name: Plane_Filter
+      quantity: 2
+
+- outputs:
+    - item_name: Logistics_Vessel
+      quantity: 1
+  processing_time: 6
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Alloy
+      quantity: 10
+    - item_name: Processor
+      quantity: 10
+    - item_name: Reinforced_Thruster
+      quantity: 2
+
+- outputs:
+    - item_name: Frame_Material
+      quantity: 1
+  processing_time: 6
+  building_name: Assembler
+  inputs:
+    - item_name: Carbon_Nanotube
+      quantity: 4
+    - item_name: Titanium_Alloy
+      quantity: 1
+    - item_name: High-Purity_Silicon
+      quantity: 1
+
+- outputs:
+    - item_name: Dyson_Sphere_Component
+      quantity: 1
+  processing_time: 8
+  building_name: Assembler
+  inputs:
+    - item_name: Frame_Material
+      quantity: 3
+    - item_name: Solar_Sail
+      quantity: 3
+    - item_name: Processor
+      quantity: 3
+
+- outputs:
+    - item_name: Small_Carrier_Rocket
+      quantity: 1
+  processing_time: 6
+  building_name: Assembler
+  inputs:
+    - item_name: Dyson_Sphere_Component
+      quantity: 2
+    - item_name: Deuteron_Fuel_Rod
+      quantity: 2
+    - item_name: Quantum_Chip
+      quantity: 2
+
+# Matrix Recipes
+- outputs:
+    - item_name: Electromagnetic_Matrix
+      quantity: 1
+  processing_time: 3
+  building_name: Research Facility
+  inputs:
+    - item_name: Magnetic_Coil
+      quantity: 1
+    - item_name: Circuit_Board
+      quantity: 1
+
+- outputs:
+    - item_name: Energy_Matrix
+      quantity: 1
+  processing_time: 6
+  building_name: Research Facility
+  inputs:
+    - item_name: Energetic_Graphite
+      quantity: 2
+    - item_name: Hydrogen
+      quantity: 2
+
+- outputs:
+    - item_name: Structure_Matrix
+      quantity: 1
+  processing_time: 8
+  building_name: Research Facility
+  inputs:
+    - item_name: Diamond
+      quantity: 1
+    - item_name: Titanium_Crystal
+      quantity: 1
+
+- outputs:
+    - item_name: Information_Matrix
+      quantity: 1
+  processing_time: 10
+  building_name: Research Facility
+  inputs:
+    - item_name: Processor
+      quantity: 2
+    - item_name: Particle_Broadband
+      quantity: 1
+
+- outputs:
+    - item_name: Gravity_Matrix
+      quantity: 1
+  processing_time: 24
+  building_name: Research Facility
+  inputs:
+    - item_name: Graviton_Lens
+      quantity: 1
+    - item_name: Quantum_Chip
+      quantity: 1
+
+- outputs:
+    - item_name: Universe_Matrix
+      quantity: 1
+  processing_time: 15
+  building_name: Research Facility
+  inputs:
+    - item_name: Electromagnetic_Matrix
+      quantity: 1
+    - item_name: Energy_Matrix
+      quantity: 1
+    - item_name: Structure_Matrix
+      quantity: 1
+    - item_name: Information_Matrix
+      quantity: 1
+    - item_name: Gravity_Matrix
+      quantity: 1
+    - item_name: Antimatter
+      quantity: 1
+
+# Building Recipes
+- outputs:
+    - building_name: Tesla_Tower
+      quantity: 1
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 2
+    - item_name: Magnetic_Coil
+      quantity: 1
+
+- outputs:
+    - building_name: Wireless_Power_Tower
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - building_name: Tesla_Tower
+      quantity: 1
+    - item_name: Plasma_Exciter
+      quantity: 3
+
+- outputs:
+    - building_name: Satellite_Substation
+      quantity: 1
+  processing_time: 5
+  building_name: Assembler
+  inputs:
+    - building_name: Wireless_Power_Tower
+      quantity: 1
+    - item_name: Super-Magnetic_Ring
+      quantity: 10
+    - item_name: Frame_Material
+      quantity: 2
+
+- outputs:
+    - building_name: Wind_Turbine
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 6
+    - item_name: Gear
+      quantity: 1
+    - item_name: Magnetic_Coil
+      quantity: 3
+
+- outputs:
+    - building_name: Thermal_Power_Station
+      quantity: 1
+  processing_time: 5
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 10
+    - item_name: Stone
+      quantity: 4
+    - item_name: Gear
+      quantity: 4
+    - item_name: Magnetic_Coil
+      quantity: 4
+
+- outputs:
+    - building_name: Solar_Panel
+      quantity: 1
+  processing_time: 5
+  building_name: Assembler
+  inputs:
+    - item_name: Copper_Ingot
+      quantity: 6
+    - item_name: High-Purity_Silicon
+      quantity: 6
+    - item_name: Circuit_Board
+      quantity: 4
+
+- outputs:
+    - building_name: Mini_Fusion_Power_Station
+      quantity: 1
+  processing_time: 10
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Alloy
+      quantity: 12
+    - item_name: Super-Magnetic_Ring
+      quantity: 10
+    - item_name: Carbon_Nanotube
+      quantity: 8
+    - item_name: Processor
+      quantity: 4
+
+- outputs:
+    - building_name: Accumulator
+      quantity: 1
+  processing_time: 5
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 6
+    - item_name: Super-Magnetic_Ring
+      quantity: 6
+    - item_name: Crystal_Silicon
+      quantity: 4
+
+- outputs:
+    - building_name: Energy_Exchanger
+      quantity: 1
+  processing_time: 15
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Alloy
+      quantity: 40
+    - item_name: Steel
+      quantity: 40
+    - item_name: Processor
+      quantity: 40
+    - item_name: Particle_Container
+      quantity: 8
+
+- outputs:
+    - building_name: Ray_Receiver
+      quantity: 1
+  processing_time: 8
+  building_name: Assembler
+  inputs:
+    - item_name: Steel
+      quantity: 20
+    - item_name: High-Purity_Silicon
+      quantity: 20
+    - item_name: Photon_Combiner
+      quantity: 10
+    - item_name: Processor
+      quantity: 5
+    - item_name: Super-Magnetic_Ring
+      quantity: 20
+
+- outputs:
+    - building_name: Artificial_Star
+      quantity: 1
+  processing_time: 30
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Alloy
+      quantity: 20
+    - item_name: Frame_Material
+      quantity: 20
+    - item_name: Annihilation_Constraint_Sphere
+      quantity: 10
+    - item_name: Quantum_Chip
+      quantity: 10
+
+- outputs:
+    - building_name: Conveyor_Belt_Mk.I
+      quantity: 3
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 2
+    - item_name: Gear
+      quantity: 1
+
+- outputs:
+    - building_name: Conveyor_Belt_Mk.II
+      quantity: 3
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - building_name: Conveyor_Belt_Mk.I
+      quantity: 3
+    - item_name: Electromagnetic_Turbine
+      quantity: 1
+
+- outputs:
+    - building_name: Conveyor_Belt_Mk.III
+      quantity: 3
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - building_name: Conveyor_Belt_Mk.II
+      quantity: 3
+    - item_name: Super-Magnetic_Ring
+      quantity: 1
+    - item_name: Graphene
+      quantity: 1
+
+- outputs:
+    - building_name: Splitter
+      quantity: 1
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 3
+    - item_name: Gear
+      quantity: 2
+    - item_name: Circuit_Board
+      quantity: 1
+
+- outputs:
+    - building_name: Storage_Mk.I
+      quantity: 1
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 4
+    - item_name: Stone
+      quantity: 4
+
+- outputs:
+    - building_name: Storage_Mk.II
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Steel
+      quantity: 8
+    - item_name: Stone
+      quantity: 8
+
+- outputs:
+    - building_name: Storage_Tank
+      quantity: 1
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 8
+    - item_name: Stone
+      quantity: 4
+    - item_name: Glass
+      quantity: 4
+
+- outputs:
+    - building_name: Logistics_Station
+      quantity: 1
+  processing_time: 20
+  building_name: Assembler
+  inputs:
+    - item_name: Steel
+      quantity: 40
+    - item_name: Titanium_Ingot
+      quantity: 40
+    - item_name: Processor
+      quantity: 40
+    - item_name: Particle_Container
+      quantity: 20
+
+- outputs:
+    - building_name: Interstellar_Logistics_Station
+      quantity: 1
+  processing_time: 30
+  building_name: Assembler
+  inputs:
+    - building_name: Logistics_Station
+      quantity: 1
+    - item_name: Titanium_Alloy
+      quantity: 50
+    - item_name: Particle_Container
+      quantity: 20
+
+- outputs:
+    - building_name: Orbit_Collector
+      quantity: 1
+  processing_time: 30
+  building_name: Assembler
+  inputs:
+    - building_name: Interstellar_Logistics_Station
+      quantity: 1
+    - item_name: Super-Magnetic_Ring
+      quantity: 50
+    - item_name: Reinforced_Thruster
+      quantity: 20
+    - building_name: Full_Accumulator
+      quantity: 20
+
+- outputs:
+    - building_name: EM-Rail_Ejector
+      quantity: 1
+  processing_time: 6
+  building_name: Assembler
+  inputs:
+    - item_name: Steel
+      quantity: 20
+    - item_name: Gear
+      quantity: 20
+    - item_name: Processor
+      quantity: 5
+    - item_name: Super-Magnetic_Ring
+      quantity: 10
+
+- outputs:
+    - building_name: Sorter_Mk.I
+      quantity: 1
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 1
+    - item_name: Circuit_Board
+      quantity: 1
+
+- outputs:
+    - building_name: Sorter_Mk.II
+      quantity: 2
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - building_name: Sorter_Mk.I
+      quantity: 2
+    - item_name: Electric_Motor
+      quantity: 1
+
+- outputs:
+    - building_name: Sorter_Mk.III
+      quantity: 2
+  processing_time: 1
+  building_name: Assembler
+  inputs:
+    - building_name: Sorter_Mk.II
+      quantity: 2
+    - item_name: Electromagnetic_Turbine
+      quantity: 1
+
+- outputs:
+    - building_name: Mining_Machine
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 4
+    - item_name: Circuit_Board
+      quantity: 2
+    - item_name: Magnetic_Coil
+      quantity: 2
+    - item_name: Gear
+      quantity: 2
+
+- outputs:
+    - building_name: Water_Pump
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 8
+    - item_name: Stone
+      quantity: 4
+    - item_name: Electric_Motor
+      quantity: 4
+    - item_name: Circuit_Board
+      quantity: 2
+
+- outputs:
+    - building_name: Oil_Extractor
+      quantity: 1
+  processing_time: 8
+  building_name: Assembler
+  inputs:
+    - item_name: Steel
+      quantity: 12
+    - item_name: Stone
+      quantity: 12
+    - item_name: Circuit_Board
+      quantity: 6
+    - item_name: Plasma_Exciter
+      quantity: 4
+
+- outputs:
+    - building_name: Oil_Refinery
+      quantity: 1
+  processing_time: 6
+  building_name: Assembler
+  inputs:
+    - item_name: Steel
+      quantity: 10
+    - item_name: Stone
+      quantity: 10
+    - item_name: Circuit_Board
+      quantity: 6
+    - item_name: Plasma_Exciter
+      quantity: 6
+
+- outputs:
+    - building_name: Miniature_Particle_Collider
+      quantity: 1
+  processing_time: 15
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Alloy
+      quantity: 20
+    - item_name: Frame_Material
+      quantity: 20
+    - item_name: Super-Magnetic_Ring
+      quantity: 50
+    - item_name: Graphene
+      quantity: 10
+    - item_name: Processor
+      quantity: 8
+
+- outputs:
+    - building_name: Matrix_Lab
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 8
+    - item_name: Glass
+      quantity: 4
+    - item_name: Circuit_Board
+      quantity: 4
+    - item_name: Magnetic_Coil
+      quantity: 4
+
+- outputs:
+    - building_name: Vertical_Launching_Silo
+      quantity: 1
+  processing_time: 30
+  building_name: Assembler
+  inputs:
+    - item_name: Titanium_Alloy
+      quantity: 80
+    - item_name: Frame_Material
+      quantity: 30
+    - item_name: Graviton_Lens
+      quantity: 20
+    - item_name: Quantum_Chip
+      quantity: 10
+
+- outputs:
+    - building_name: Assembling_Machine_Mk.I
+      quantity: 1
+  processing_time: 2
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 4
+    - item_name: Gear
+      quantity: 8
+    - item_name: Circuit_Board
+      quantity: 4
+
+- outputs:
+    - building_name: Assembling_Machine_Mk.II
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - building_name: Assembling_Machine_Mk.I
+      quantity: 1
+    - item_name: Graphene
+      quantity: 8
+    - item_name: Processor
+      quantity: 4
+
+- outputs:
+    - building_name: Assembling_Machine_Mk.III
+      quantity: 1
+  processing_time: 4
+  building_name: Assembler
+  inputs:
+    - building_name: Assembling_Machine_Mk.II
+      quantity: 1
+    - item_name: Particle_Broadband
+      quantity: 8
+    - item_name: Quantum_Chip
+      quantity: 2
+
+- outputs:
+    - building_name: Smelter
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - item_name: Iron_Ingot
+      quantity: 4
+    - item_name: Stone
+      quantity: 2
+    - item_name: Circuit_Board
+      quantity: 4
+    - item_name: Magnetic_Coil
+      quantity: 2
+
+- outputs:
+    - building_name: Chemical_Plant
+      quantity: 1
+  processing_time: 5
+  building_name: Assembler
+  inputs:
+    - item_name: Steel
+      quantity: 8
+    - item_name: Stone
+      quantity: 8
+    - item_name: Glass
+      quantity: 8
+    - item_name: Circuit_Board
+      quantity: 2
+
+- outputs:
+    - building_name: Fractionator
+      quantity: 1
+  processing_time: 3
+  building_name: Assembler
+  inputs:
+    - item_name: Steel
+      quantity: 8
+    - item_name: Stone
+      quantity: 4
+    - item_name: Glass
+      quantity: 4
+    - item_name: Processor
+      quantity: 1
+
+- outputs:
+    - building_name: Full_Accumulator
+      quantity: 1
+  processing_time: 1
+  building_name: Energy_Exchanger
+  inputs:
+    - building_name: Accumulator
+      quantity: 1
+    # This is a fake recipe for Deuterium from Fractionator.

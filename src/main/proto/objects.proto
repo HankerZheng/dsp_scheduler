@@ -37,7 +37,6 @@ message Ingredient {
   }
   // The quantity required or produced in one recipe.
   int32 quantity = 3;
-  float yield_rate = 4;
 }
 
 message Requirement {
