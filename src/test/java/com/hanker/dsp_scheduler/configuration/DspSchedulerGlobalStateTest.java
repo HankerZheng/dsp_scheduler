@@ -1,12 +1,13 @@
 package com.hanker.dsp_scheduler.configuration;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.hanker.dsp_scheduler.proto.Building;
 import com.hanker.dsp_scheduler.proto.Ingredient;
 import com.hanker.dsp_scheduler.proto.Item;
 import com.hanker.dsp_scheduler.proto.Recipe;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.Map;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.extensions.proto.ProtoTruth.assertThat;
@@ -36,48 +37,46 @@ public class DspSchedulerGlobalStateTest {
   }
 
   @Test
-  public void initialize() {
-    ImmutableMap<String, Item> itemMap = ImmutableMap.of(
-        "item1", Item.newBuilder().setName("item1").build(),
-        "item2", Item.newBuilder().setName("item2").build(),
-        "item3", Item.newBuilder().setName("item3").build());
-    Building workerBuilding = Building.newBuilder().setName("worker").build();
-    Building building = Building.newBuilder().setName("building").build();
-    ImmutableMap<String, Building> buildingMap =
-        ImmutableMap.of("worker", workerBuilding, "building", building);
-    Recipe recipe1 =
-        Recipe.newBuilder()
-            .addInputs(Ingredient.newBuilder().setItemName("item1").setQuantity(1).build())
-            .addInputs(Ingredient.newBuilder().setItemName("item2").setQuantity(2).build())
-            .addOutputs(Ingredient.newBuilder().setItemName("item3").setQuantity(3).build())
-            .setProcessingTime(2.0F)
-            .setBuildingName("worker").build();
-    Recipe recipe2 =
-        Recipe.newBuilder()
-            .addInputs(Ingredient.newBuilder().setItemName("item2").setQuantity(2).build())
-            .addInputs(Ingredient.newBuilder().setItemName("item3").setQuantity(3).build())
-            .addOutputs(Ingredient.newBuilder().setBuildingName("building").setQuantity(1).build())
-            .setProcessingTime(4.0F)
-            .setBuildingName("worker").build();
-    ImmutableList<Recipe> recipes = ImmutableList.of(recipe1, recipe2);
+  public void initialize() throws Exception {
+    Map<String, Item> itemMap = ConfigParser.parseItemMap("test_items.yml");
+    Map<String, Building> buildingMap = ConfigParser.parseBuildingMap("test_buildings.yml");
+    List<Recipe> recipes = ConfigParser.parseRecipes("test_recipes.yml");
 
     DspSchedulerGlobalState state = DspSchedulerGlobalState.createFromLocalData(itemMap, buildingMap, recipes);
 
+    assertThat(state.getItem("itemForParserTest")).isNotNull();
     assertThat(state.getItem("item1"))
         .ignoringRepeatedFieldOrder()
-        .isEqualTo(Item.newBuilder().setName("item1").addProducedItems("item3").build());
+        .isEqualTo(Item.newBuilder()
+            .setName("item1")
+            .setDescription("description for item1.")
+            .addProducedItems("item3")
+            .build());
     assertThat(state.getItem("item2"))
         .ignoringRepeatedFieldOrder()
-        .isEqualTo(Item.newBuilder().setName("item2").addProducedItems("item3").addProducedBuildings("building")
+        .isEqualTo(Item.newBuilder().setName("item2")
+            .setDescription("description for item2.")
+            .addProducedItems("item1")
+            .addProducedItems("item3")
+            .addProducedBuildings("building")
             .build());
     assertThat(state.getItem("item3"))
         .ignoringRepeatedFieldOrder()
-        .isEqualTo(Item.newBuilder().setName("item3").addProducedBuildings("building").build());
-    assertThat(state.getBuilding("worker")).isEqualTo(workerBuilding);
-    assertThat(state.getBuilding("building")).isEqualTo(building);
-    assertThat(state.getRecipeByName("item1")).isEmpty();
-    assertThat(state.getRecipeByName("item2")).isEmpty();
-    assertThat(state.getRecipeByName("item3")).containsExactly(recipe1);
-    assertThat(state.getRecipeByName("building")).containsExactly(recipe2);
+        .isEqualTo(Item.newBuilder().setName("item3")
+            .setDescription("description for item3.")
+            .addProducedItems("item1")
+            .addProducedItems("item3")
+            .addProducedBuildings("building")
+            .build());
+    assertThat(state.getBuilding("worker")).isEqualTo(
+        Building.newBuilder().setName("worker").setYieldMultiplier(1.5F).build());
+    assertThat(state.getBuilding("building")).isEqualTo(Building.newBuilder().setName("building").build());
+    assertThat(state.getRecipeByName("item1")).ignoringRepeatedFieldOrder()
+        .containsExactly(recipes.get(2));
+    assertThat(state.getRecipeByName("item2"))
+        .isEmpty();
+    assertThat(state.getRecipeByName("item3")).ignoringRepeatedFieldOrder()
+        .containsExactly(recipes.get(0), recipes.get(2));
+    assertThat(state.getRecipeByName("building")).containsExactly(recipes.get(1));
   }
 }

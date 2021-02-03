@@ -58,23 +58,23 @@ public class ConfigParserTest {
         .addOutputs(Ingredient.newBuilder().setItemName("item3").setQuantity(1))
         .addInputs(Ingredient.newBuilder().setItemName("item1").setQuantity(2))
         .addInputs(Ingredient.newBuilder().setItemName("item2").setQuantity(3))
-        .setBuildingName("worker")
-        .setProcessingTime(4.0F)
+        .setFactory("worker")
+        .setCraftTime(4.0F)
         .build();
     Recipe recipe2 = Recipe.newBuilder()
         .addOutputs(Ingredient.newBuilder().setBuildingName("building").setQuantity(1))
         .addInputs(Ingredient.newBuilder().setItemName("item2").setQuantity(2))
         .addInputs(Ingredient.newBuilder().setItemName("item3").setQuantity(3))
-        .setBuildingName("worker")
-        .setProcessingTime(3.0F)
+        .setFactory("worker")
+        .setCraftTime(3.0F)
         .build();
     Recipe recipe3 = Recipe.newBuilder()
         .addOutputs(Ingredient.newBuilder().setItemName("item3").setQuantity(3))
         .addOutputs(Ingredient.newBuilder().setItemName("item1").setQuantity(1))
         .addInputs(Ingredient.newBuilder().setItemName("item2").setQuantity(1))
         .addInputs(Ingredient.newBuilder().setItemName("item3").setQuantity(1))
-        .setBuildingName("worker")
-        .setProcessingTime(2.0F)
+        .setFactory("worker")
+        .setCraftTime(2.0F)
         .build();
 
     List<Recipe> recipeList =

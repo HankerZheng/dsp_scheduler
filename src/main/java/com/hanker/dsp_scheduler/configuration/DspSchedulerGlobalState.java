@@ -4,16 +4,14 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Sets;
 import com.hanker.dsp_scheduler.proto.Building;
 import com.hanker.dsp_scheduler.proto.Ingredient;
 import com.hanker.dsp_scheduler.proto.Item;
 import com.hanker.dsp_scheduler.proto.Recipe;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.hanker.dsp_scheduler.proto.Ingredient.IngredientNameOneofCase.BUILDING_NAME;
 import static com.hanker.dsp_scheduler.proto.Ingredient.IngredientNameOneofCase.ITEM_NAME;
@@ -55,7 +53,7 @@ public class DspSchedulerGlobalState {
 
   private DspSchedulerGlobalState initialize(List<Recipe> recipeList) {
     for (Recipe recipe : recipeList) {
-      updateProducedItemsInItemMap(recipe);
+      updateProducedInItemMap(recipe);
       for (Ingredient outputIngredient : recipe.getOutputsList()) {
         this.recipeMultimap.put(getItemOrBuildingName(outputIngredient), recipe);
       }
@@ -82,28 +80,31 @@ public class DspSchedulerGlobalState {
     }
   }
 
-  private void updateProducedItemsInItemMap(Recipe recipe) {
-    List<String> producedItems = new ArrayList<>();
-    List<String> producedBuildings = new ArrayList<>();
+  private void updateProducedInItemMap(Recipe recipe) {
+    Set<String> producedItems = new HashSet<>();
+    Set<String> producedBuildings = new HashSet<>();
     for (Ingredient output : recipe.getOutputsList()) {
-      if (!output.getItemName().isEmpty()) {
+      if (output.getIngredientNameOneofCase() == ITEM_NAME) {
         producedItems.add(output.getItemName());
-      } else if (!output.getBuildingName().isEmpty()) {
+      } else if (output.getIngredientNameOneofCase() == BUILDING_NAME) {
         producedBuildings.add(output.getBuildingName());
       }
     }
     for (Ingredient input : recipe.getInputsList()) {
-      if (input.getIngredientNameOneofCase() == BUILDING_NAME) {
-        continue;
+      if (input.getIngredientNameOneofCase() == ITEM_NAME) {
+        Item inputItem = itemMap.get(input.getItemName());
+        Preconditions.checkNotNull(inputItem, "Item %s not in the map.", input.getItemName());
+        itemMap.put(
+            input.getItemName(),
+            inputItem.toBuilder()
+                .clearProducedItems()
+                .clearProducedBuildings()
+                .addAllProducedItems(
+                    Sets.union(producedItems, new HashSet<>(inputItem.getProducedItemsList())))
+                .addAllProducedBuildings(
+                    Sets.union(producedBuildings, new HashSet<>(inputItem.getProducedBuildingsList())))
+                .build());
       }
-      Item inputItem = itemMap.get(input.getItemName());
-      Preconditions.checkNotNull(inputItem, "Item %s not in the map.", input.getItemName());
-      itemMap.put(
-          input.getItemName(),
-          inputItem.toBuilder()
-              .addAllProducedItems(producedItems)
-              .addAllProducedBuildings(producedBuildings)
-              .build());
     }
   }
 

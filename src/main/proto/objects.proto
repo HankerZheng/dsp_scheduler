@@ -24,9 +24,9 @@ message Building {
 message Recipe {
   repeated Ingredient outputs = 1;
   repeated Ingredient inputs = 2;
-  string building_name = 3;
+  string factory = 3;
   // The time in seconds to produce one set of output ingredients.
-  float processing_time = 4;
+  float craft_time = 4;
 }
 
 message Ingredient {
@@ -45,6 +45,6 @@ message Requirement {
     string building_name = 2;
   }
   float yield_rate = 3;
-  string building = 4;
-  int32 building_count = 5;
+  string factory = 4;
+  int32 factory_count = 5;
 }
