@@ -52,20 +52,16 @@ public class DspScheduler {
       System.err.printf("The recipe [%s] is not used for generate item [%s]!", recipe, name);
       return ImmutableList.of();
     }
-    float yieldRatePerBuilding = 60.0F / recipe.getProcessingTime() * ingredientOptional.get().getQuantity();
-    int minRequiredBuilding = (int) Math.ceil(yieldRate / yieldRatePerBuilding);
+
     List<Requirement> requirements = new ArrayList<>();
     for (Ingredient ingredient : recipe.getInputsList()) {
-      float requiredYieldRate = minRequiredBuilding * 60.0F / ingredient.getQuantity();
       Requirement.Builder requirementBuilder = Requirement.newBuilder();
       if (ingredient.getIngredientNameOneofCase() == ITEM_NAME) {
         requirementBuilder.setItemName(ingredient.getItemName());
       } else if (ingredient.getIngredientNameOneofCase() == BUILDING_NAME) {
         requirementBuilder.setBuildingName(ingredient.getBuildingName());
       }
-      requirementBuilder.setYieldRate(requiredYieldRate);
-      requirementBuilder.setBuilding(recipe.getBuildingName());
-      requirementBuilder.setBuildingCount(minRequiredBuilding);
+      requirementBuilder.setYieldRate(yieldRate * ingredient.getQuantity());
       requirements.add(requirementBuilder.build());
     }
     return requirements;
