@@ -30,6 +30,14 @@ public class DspScheduler {
     }
   }
 
+  public static void main(String[] args) {
+    DspScheduler scheduler = createFromDefaultConfiguration();
+    scheduler.state.validate();
+    for (Requirement requirement : scheduler.getRequirementsToProduce("Electric_Motor", 100)) {
+      System.out.printf("%s\n", requirement);
+    }
+  }
+
   /**
    * Finds the requirements to produce a product at a give yield rate with the default recipe.
    */
@@ -41,9 +49,9 @@ public class DspScheduler {
   /**
    * Finds the requirements to produce a product at a give yield rate.
    *
-   * @param name   The name of the output item or building.
-   * @param yieldRate  The number of products to be produced per minute.
-   * @param recipe The recipe to be used to produce this product.
+   * @param name      The name of the output item or building.
+   * @param yieldRate The number of products to be produced per minute.
+   * @param recipe    The recipe to be used to produce this product.
    * @return The minimal ingredients required to achieve the goal. Returns an empty list if the input recipe is invalid.
    */
   public List<Requirement> getRequirementsToProduce(String name, float yieldRate, Recipe recipe) {
@@ -91,14 +99,6 @@ public class DspScheduler {
       }
     }
     return Optional.empty();
-  }
-
-  public static void main(String[] args) {
-    DspScheduler scheduler = createFromDefaultConfiguration();
-    scheduler.state.validate();
-    for (Requirement requirement : scheduler.getRequirementsToProduce("Electric_Motor", 100)) {
-      System.out.printf("%s\n", requirement);
-    }
   }
 
 }
