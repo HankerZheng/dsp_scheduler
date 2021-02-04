@@ -41,6 +41,4 @@ message Ingredient {
 message Requirement {
   string name = 1;
   float yield_rate = 2;
-  string factory = 3;
-  int32 factory_count = 4;
 }

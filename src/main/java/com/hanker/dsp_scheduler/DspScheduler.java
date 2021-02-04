@@ -68,7 +68,7 @@ public class DspScheduler {
     return requirements;
   }
 
-  private Recipe getDefaultRecipe(String name) {
+  public Recipe getDefaultRecipe(String name) {
     return state.getRecipeByName(name)
         .stream()
         .filter(recipe -> !getInputIngredientFromRecipe(name, recipe).isPresent())
