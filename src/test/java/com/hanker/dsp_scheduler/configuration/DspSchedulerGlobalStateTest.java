@@ -1,7 +1,6 @@
 package com.hanker.dsp_scheduler.configuration;
 
 import com.hanker.dsp_scheduler.proto.Building;
-import com.hanker.dsp_scheduler.proto.Ingredient;
 import com.hanker.dsp_scheduler.proto.Item;
 import com.hanker.dsp_scheduler.proto.Recipe;
 import org.junit.Test;
@@ -9,32 +8,10 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.extensions.proto.ProtoTruth.assertThat;
-import static org.junit.Assert.assertThrows;
 
 
 public class DspSchedulerGlobalStateTest {
-
-  @Test
-  public void getOutputItemOrBuildingName_buildingName() {
-    Ingredient ingredient = Ingredient.newBuilder().setBuildingName("building").build();
-    assertThat(DspSchedulerGlobalState.getItemOrBuildingName(ingredient)).isEqualTo("building");
-  }
-
-  @Test
-  public void getOutputItemOrBuildingName_itemName() {
-    Ingredient ingredient = Ingredient.newBuilder().setItemName("item").build();
-    assertThat(DspSchedulerGlobalState.getItemOrBuildingName(ingredient)).isEqualTo("item");
-  }
-
-  @Test
-  public void getOutputItemOrBuildingName_noName() {
-    Ingredient ingredient = Ingredient.getDefaultInstance();
-    RuntimeException e = assertThrows(RuntimeException.class,
-        () -> DspSchedulerGlobalState.getItemOrBuildingName(ingredient));
-    assertThat(e).hasMessageThat().contains("No name is set in the ingredient");
-  }
 
   @Test
   public void initialize() throws Exception {

@@ -2,7 +2,6 @@ package com.hanker.dsp_scheduler.configuration;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Sets;
 import com.hanker.dsp_scheduler.proto.Building;
@@ -13,8 +12,6 @@ import com.hanker.dsp_scheduler.proto.Recipe;
 import java.io.IOException;
 import java.util.*;
 
-import static com.hanker.dsp_scheduler.proto.Ingredient.IngredientNameOneofCase.BUILDING_NAME;
-import static com.hanker.dsp_scheduler.proto.Ingredient.IngredientNameOneofCase.ITEM_NAME;
 
 public class DspSchedulerGlobalState {
   private ListMultimap<String, Recipe> recipeMultimap;
@@ -23,7 +20,7 @@ public class DspSchedulerGlobalState {
 
   DspSchedulerGlobalState(Map<String, Item> itemMap, Map<String, Building> buildingMap, List<Recipe> recipeList) {
     this.itemMap = new HashMap<>(itemMap);
-    this.buildingMap = ImmutableMap.copyOf(buildingMap);
+    this.buildingMap = new HashMap(buildingMap);
     this.recipeMultimap = ArrayListMultimap.create();
     initialize(recipeList);
   }
@@ -41,21 +38,13 @@ public class DspSchedulerGlobalState {
     return new DspSchedulerGlobalState(itemMap, buildingMap, recipeList);
   }
 
-  public static String getItemOrBuildingName(Ingredient ingredient) {
-    if (ingredient.getIngredientNameOneofCase() == ITEM_NAME) {
-      return ingredient.getItemName();
-    } else if (ingredient.getIngredientNameOneofCase() == BUILDING_NAME) {
-      return ingredient.getBuildingName();
-    }
-    throw new RuntimeException(String.format("No name is set in the ingredient %s", ingredient));
-  }
 
 
   private DspSchedulerGlobalState initialize(List<Recipe> recipeList) {
     for (Recipe recipe : recipeList) {
       updateProducedInItemMap(recipe);
       for (Ingredient outputIngredient : recipe.getOutputsList()) {
-        this.recipeMultimap.put(getItemOrBuildingName(outputIngredient), recipe);
+        this.recipeMultimap.put(outputIngredient.getName(), recipe);
       }
     }
     return this;
@@ -84,18 +73,20 @@ public class DspSchedulerGlobalState {
     Set<String> producedItems = new HashSet<>();
     Set<String> producedBuildings = new HashSet<>();
     for (Ingredient output : recipe.getOutputsList()) {
-      if (output.getIngredientNameOneofCase() == ITEM_NAME) {
-        producedItems.add(output.getItemName());
-      } else if (output.getIngredientNameOneofCase() == BUILDING_NAME) {
-        producedBuildings.add(output.getBuildingName());
+      String name = output.getName();
+      if (itemMap.containsKey(name)) {
+        producedItems.add(output.getName());
+      } else if (buildingMap.containsKey(name)) {
+        producedBuildings.add(output.getName());
       }
     }
     for (Ingredient input : recipe.getInputsList()) {
-      if (input.getIngredientNameOneofCase() == ITEM_NAME) {
-        Item inputItem = itemMap.get(input.getItemName());
-        Preconditions.checkNotNull(inputItem, "Item %s not in the map.", input.getItemName());
+      String name = input.getName();
+      if (itemMap.containsKey(name)) {
+        Item inputItem = itemMap.get(name);
+        Preconditions.checkNotNull(inputItem, "Item %s not in the map.", name);
         itemMap.put(
-            input.getItemName(),
+            name,
             inputItem.toBuilder()
                 .clearProducedItems()
                 .clearProducedBuildings()
@@ -103,6 +94,19 @@ public class DspSchedulerGlobalState {
                     Sets.union(producedItems, new HashSet<>(inputItem.getProducedItemsList())))
                 .addAllProducedBuildings(
                     Sets.union(producedBuildings, new HashSet<>(inputItem.getProducedBuildingsList())))
+                .build());
+      } else if (buildingMap.containsKey(name)) {
+        Building inputBuilding = buildingMap.get(name);
+        Preconditions.checkNotNull(inputBuilding, "Building %s is not in the map.", name);
+        buildingMap.put(
+            name,
+            inputBuilding.toBuilder()
+                .clearProducedItems()
+                .clearProducedBuildings()
+                .addAllProducedItems(
+                    Sets.union(producedItems, new HashSet<>(inputBuilding.getProducedItemsList())))
+                .addAllProducedBuildings(
+                    Sets.union(producedBuildings, new HashSet<>(inputBuilding.getProducedBuildingsList())))
                 .build());
       }
     }

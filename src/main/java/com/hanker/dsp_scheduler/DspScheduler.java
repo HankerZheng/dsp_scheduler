@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.hanker.dsp_scheduler.proto.Ingredient.IngredientNameOneofCase.BUILDING_NAME;
-import static com.hanker.dsp_scheduler.proto.Ingredient.IngredientNameOneofCase.ITEM_NAME;
-
 public class DspScheduler {
   private DspSchedulerGlobalState state;
 
@@ -64,11 +61,7 @@ public class DspScheduler {
     List<Requirement> requirements = new ArrayList<>();
     for (Ingredient ingredient : recipe.getInputsList()) {
       Requirement.Builder requirementBuilder = Requirement.newBuilder();
-      if (ingredient.getIngredientNameOneofCase() == ITEM_NAME) {
-        requirementBuilder.setItemName(ingredient.getItemName());
-      } else if (ingredient.getIngredientNameOneofCase() == BUILDING_NAME) {
-        requirementBuilder.setBuildingName(ingredient.getBuildingName());
-      }
+      requirementBuilder.setName(ingredient.getName());
       requirementBuilder.setYieldRate(yieldRate * ingredient.getQuantity());
       requirements.add(requirementBuilder.build());
     }
@@ -85,7 +78,7 @@ public class DspScheduler {
 
   private Optional<Ingredient> getOutputIngredientFromRecipe(String name, Recipe recipe) {
     for (Ingredient ingredient : recipe.getOutputsList()) {
-      if (DspSchedulerGlobalState.getItemOrBuildingName(ingredient).equals(name)) {
+      if (ingredient.getName().equals(name)) {
         return Optional.of(ingredient);
       }
     }
@@ -94,7 +87,7 @@ public class DspScheduler {
 
   private Optional<Ingredient> getInputIngredientFromRecipe(String name, Recipe recipe) {
     for (Ingredient ingredient : recipe.getInputsList()) {
-      if (DspSchedulerGlobalState.getItemOrBuildingName(ingredient).equals(name)) {
+      if (ingredient.getName().equals(name)) {
         return Optional.of(ingredient);
       }
     }

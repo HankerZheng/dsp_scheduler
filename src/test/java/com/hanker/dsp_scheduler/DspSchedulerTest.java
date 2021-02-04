@@ -40,9 +40,9 @@ public class DspSchedulerTest {
 
     assertThat(requirements).ignoringRepeatedFieldOrder().containsExactly(
         Requirement.newBuilder()
-            .setItemName("item2").setYieldRate(60.0F).build(),
+            .setName("item2").setYieldRate(60.0F).build(),
         Requirement.newBuilder()
-            .setItemName("item3").setYieldRate(60.0F).build());
+            .setName("item3").setYieldRate(60.0F).build());
   }
 
   @Test
@@ -50,9 +50,9 @@ public class DspSchedulerTest {
     List<Requirement> requirements = dspScheduler.getRequirementsToProduce("item3", 60);
     assertThat(requirements).ignoringRepeatedFieldOrder().containsExactly(
         Requirement.newBuilder()
-            .setItemName("item1").setYieldRate(120.0F).build(),
+            .setName("item1").setYieldRate(120.0F).build(),
         Requirement.newBuilder()
-            .setItemName("item2").setYieldRate(180.0F).build());
+            .setName("item2").setYieldRate(180.0F).build());
   }
 
   @Test
@@ -60,8 +60,8 @@ public class DspSchedulerTest {
     List<Requirement> requirements = dspScheduler.getRequirementsToProduce("building", 60);
     assertThat(requirements).ignoringRepeatedFieldOrder().containsExactly(
         Requirement.newBuilder()
-            .setItemName("item2").setYieldRate(120.0F).build(),
+            .setName("item2").setYieldRate(120.0F).build(),
         Requirement.newBuilder()
-            .setItemName("item3").setYieldRate(180.0F).build());
+            .setName("item3").setYieldRate(180.0F).build());
   }
 }

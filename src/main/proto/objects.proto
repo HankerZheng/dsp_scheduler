@@ -15,10 +15,12 @@ message Item {
 
 message Building {
   string name = 1;
+  repeated string produced_items = 2;
+  repeated string produced_buildings = 3;
   // The power consumption in kW when the building doesn't produce.
-  int32 idle_power = 2;
-  int32 full_power = 3;
-  float yield_multiplier = 4;
+  int32 idle_power = 4;
+  int32 full_power = 5;
+  float yield_multiplier = 6;
 }
 
 message Recipe {
@@ -31,20 +33,14 @@ message Recipe {
 
 message Ingredient {
   // The name of one item or building.
-  oneof ingredient_name_oneof {
-    string item_name = 1;
-    string building_name = 2;
-  }
+  string name = 1;
   // The quantity required or produced in one recipe.
-  int32 quantity = 3;
+  int32 quantity = 2;
 }
 
 message Requirement {
-  oneof requirement_name_oneof {
-    string item_name = 1;
-    string building_name = 2;
-  }
-  float yield_rate = 3;
-  string factory = 4;
-  int32 factory_count = 5;
+  string name = 1;
+  float yield_rate = 2;
+  string factory = 3;
+  int32 factory_count = 4;
 }
