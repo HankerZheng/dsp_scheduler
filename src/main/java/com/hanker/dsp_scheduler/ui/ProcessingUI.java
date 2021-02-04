@@ -1,11 +1,13 @@
 package com.hanker.dsp_scheduler.ui;
 
 import com.hanker.dsp_scheduler.DspScheduler;
+import com.hanker.dsp_scheduler.proto.Building;
 import com.hanker.dsp_scheduler.proto.Item;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class ProcessingUI extends PApplet {
   int itemSize = 55;     // Diameter of rect
@@ -205,22 +207,26 @@ public class ProcessingUI extends PApplet {
     noStroke();
     rect(marginTop + (i * itemSize), marginLeft + (j * itemSize), itemSize, itemSize, recRad);
     Item item = dspScheduler.getState().getItem(itemName);
+    renderProductList(item.getProducedItemsList(), item.getProducedBuildingsList());
+  }
+
+  void renderProductList(List<String> itemList, List<String> buildingList) {
     int indexColumn = 0;
     int indexRow = 0;
-    for (String producedItemName : item.getProducedItemsList()) {
+    for (String producedItemName : itemList) {
       renderItem(producedItemName, producedItemMarginLeft + indexColumn * itemSize, itemSize * indexRow + producedItemMarginTop);
-      indexColumn ++;
-      if ( producedItemMarginLeft + indexColumn * itemSize + itemSize > width - marginLeft) {
+      indexColumn++;
+      if (producedItemMarginLeft + indexColumn * itemSize + itemSize > width - marginLeft) {
         indexColumn = 0;
         indexRow++;
       }
     }
     indexColumn = 0;
     indexRow++;
-    for (String producedBuildingName : item.getProducedBuildingsList()) {
-      renderBuilding(producedBuildingName, producedItemMarginLeft + indexColumn * itemSize, itemSize * indexRow+ producedItemMarginTop);
-      indexColumn ++;
-      if ( producedItemMarginLeft + indexColumn * itemSize + itemSize > width - marginLeft) {
+    for (String producedBuildingName : buildingList) {
+      renderBuilding(producedBuildingName, producedItemMarginLeft + indexColumn * itemSize, itemSize * indexRow + producedItemMarginTop);
+      indexColumn++;
+      if (producedItemMarginLeft + indexColumn * itemSize + itemSize > width - marginLeft) {
         indexColumn = 0;
         indexRow++;
       }
@@ -241,6 +247,8 @@ public class ProcessingUI extends PApplet {
     }
     noStroke();
     rect(buildingMarginLeft + (i * itemSize), buildingMarginTop + (j * itemSize), itemSize, itemSize, recRad);
+    Building building = dspScheduler.getState().getBuilding(buildingName);
+    renderProductList(building.getProducedItemsList(), building.getProducedBuildingsList());
   }
 
   void renderAllItems() {
