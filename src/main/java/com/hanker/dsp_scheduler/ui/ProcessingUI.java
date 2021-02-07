@@ -289,6 +289,7 @@ public class ProcessingUI extends PApplet {
         rect(buildingMarginLeft + (i * itemSize), buildingMarginTop + (j * itemSize), itemSize, itemSize, recRad);
         Building building = dspScheduler.getState().getBuilding(buildingName);
         renderProductList(building.getProducedItemsList(), building.getProducedBuildingsList());
+        renderRecipes(dspScheduler.getState().getRecipeByName(building.getName()));
     }
 
     void renderAllItems() {
